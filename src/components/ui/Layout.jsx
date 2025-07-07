@@ -1,4 +1,5 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import Navbar from "@/custom/Navbar";
 import { AppSidebar } from "@/custom/SidebarCompo";
 
 export default function Layout({ children }) {
@@ -8,7 +9,12 @@ export default function Layout({ children }) {
                 <AppSidebar />
                 <div className="relative flex-1 overflow-y-auto">
                     {/* Sidebar Toggle Button - visible on all screens */}
-                    <SidebarTrigger className="absolute top-4 left-4 z-50" />
+                    <div className="fixed top-0 flex-row flex items-center">
+                        <Navbar >
+
+                            <SidebarTrigger className="absolute top-4 left-4 z-50" />
+                        </Navbar>
+                    </div>
 
                     {/* Main Page Content */}
                     <div className="p-6 pt-16">

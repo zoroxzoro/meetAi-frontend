@@ -39,7 +39,7 @@ export default function RegisterPage() {
                 </div>
 
                 {/* Right: Brand Panel (hidden on small screens) */}
-                <div className="hidden md:flex w-1/2 bg-gradient-to-br from-green-700 to-green-900 text-white flex-col items-center justify-center p-8">
+                <div className="hidden md:flex w-1/2 bg-gradient-to-br from-sidebar-accent to-sidebar text-white flex-col items-center justify-center p-8">
                     <img src="/logo.svg" alt="logo" className="h-[100px] w-[100px]" />
                     <h1 className="text-3xl font-bold mt-4">Meet.AI</h1>
                 </div>
