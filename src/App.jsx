@@ -1,14 +1,10 @@
-import {
-  useUser
-} from "@clerk/clerk-react";
-import { Home } from "lucide-react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import RegisterPage from "./custom/Register";
 import LoginPage from "./custom/Sing";
 import HomePage from "./Pages/Home";
 import Layout from "./components/ui/Layout";
-import AppLayout from "./components/ui/Layout";
 import MeetingsPage from "./custom/MeetingsPage";
+import AgentsPage from "./Pages/Agents";
 
 function App() {
   const location = useLocation();
@@ -16,21 +12,20 @@ function App() {
   const isLayoutHidden = hideLayoutRoutes.includes(location.pathname);
 
   return (
-
     <>
       {isLayoutHidden ? (
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-
+          <Route path="/signup" element={<RegisterPage />} />
         </Routes>
       ) : (
-        <Layout>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/meetings" element={<MeetingsPage />} />
-
-          </Routes>
-        </Layout>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<HomePage />} />
+            <Route path="meetings" element={<MeetingsPage />} />
+            <Route path="agents" element={<AgentsPage />} />
+          </Route>
+        </Routes>
       )}
     </>
   );

@@ -1,15 +1,17 @@
+// src/redux/store.js
 import { configureStore } from "@reduxjs/toolkit";
-
-// (Optional: you can import slices or APIs here)
 import { api } from "../redux/Api/UserApi.js";
+import { agentsApi } from "./Api/AgentApi.js";
 
 const store = configureStore({
     reducer: {
-        // RTK Query reducer
         [api.reducerPath]: api.reducer,
+        [agentsApi.reducerPath]: agentsApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(api.middleware),
+        getDefaultMiddleware()
+            .concat(api.middleware)
+            .concat(agentsApi.middleware),
 });
 
 export default store;
