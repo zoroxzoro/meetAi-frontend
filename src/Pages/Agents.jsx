@@ -10,6 +10,7 @@ import { CreateAgentDialog } from "@/custom/CreateAgentsDialog";
 import { Trash2Icon, PencilIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import AgentTable from "@/custom/DataTable";
 
 export default function AgentsPage() {
     const { user, isLoaded } = useUser();
@@ -84,37 +85,7 @@ export default function AgentsPage() {
             {agents.length === 0 ? (
                 <p className="text-muted-foreground">You haven’t created any agents yet.</p>
             ) : (
-                <ul className="space-y-4 mt-10 max-w-2xl">
-                    {agents.map((agent) => (
-                        <li key={agent._id} className="p-4 border rounded shadow-sm bg-white flex justify-between items-start">
-                            <div>
-                                <h2 className="font-semibold">{agent.name}</h2>
-                                <p className="text-muted-foreground">{agent.instruction}</p>
-                            </div>
-                            <div className="flex gap-2">
-                                {/* Edit */}
-                                <CreateAgentDialog
-                                    agent={agent}
-                                    onSuccess={fetchAgents}
-                                    triggerButton={
-                                        <Button variant="ghost" size="icon">
-                                            <PencilIcon className="w-4 h-4 text-primary" />
-                                        </Button>
-                                    }
-                                />
-
-                                {/* Delete using toast.confirm */}
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    onClick={() => handleConfirmDelete(agent._id)}
-                                >
-                                    <Trash2Icon className="w-4 h-4 text-red-600" />
-                                </Button>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                <AgentTable agents={agents} onDelete={handleConfirmDelete} onRefresh={fetchAgents} />
             )}
         </div>
     );

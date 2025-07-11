@@ -26,6 +26,7 @@ import {
     useUpdateAgentMutation,
 } from "@/redux/Api/AgentApi";
 import { toast } from "sonner";
+import { PlusIcon } from "lucide-react";
 
 export function CreateAgentDialog({ onSuccess, agent = null, triggerButton = null }) {
     const [open, setOpen] = useState(false);
@@ -101,6 +102,7 @@ export function CreateAgentDialog({ onSuccess, agent = null, triggerButton = nul
                     onClick={handleSubmit}
                     disabled={creating || updating}
                 >
+                    <PlusIcon />
                     {creating || updating ? "Saving..." : isEdit ? "Update" : "Create"}
                 </Button>
             </div>
@@ -119,6 +121,7 @@ export function CreateAgentDialog({ onSuccess, agent = null, triggerButton = nul
             <Trigger asChild>
                 {triggerButton || (
                     <Button className="bg-green-600 hover:bg-green-700 text-white">
+                        <PlusIcon />
                         {isEdit ? "Edit Agent" : "Create Agent"}
                     </Button>
                 )}
