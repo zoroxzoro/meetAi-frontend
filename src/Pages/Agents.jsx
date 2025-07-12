@@ -11,7 +11,7 @@ import { Trash2Icon, PencilIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import AgentTable from "@/custom/DataTable";
-
+import empty from "../../public/empty.svg";
 export default function AgentsPage() {
     const { user, isLoaded } = useUser();
     const [getAgentsByUser, { data: agents = [], isLoading, isError, error }] =
@@ -83,7 +83,10 @@ export default function AgentsPage() {
             </div>
 
             {agents.length === 0 ? (
-                <p className="text-muted-foreground">You haven’t created any agents yet.</p>
+                <div className="flex flex-col items-center mt-10 text-center space-y-4">
+                    <img src={empty} alt="No meetings" className="w-md" />
+                    <p className="text-muted-foreground">You haven’t created any meetings yet.</p>
+                </div>
             ) : (
                 <AgentTable agents={agents} onDelete={handleConfirmDelete} onRefresh={fetchAgents} />
             )}
