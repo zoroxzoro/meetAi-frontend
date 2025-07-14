@@ -18,7 +18,10 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
 
-export default function MeetingTable({ meetings = [] }) {
+export default function MeetingTable({ meetings = [], showStartButton = false }) {
+    const [page, setPage] = useState(1);
+    const perPage = 5;
+
     const getStatusColor = (status) => {
         switch (status) {
             case "upcoming":
@@ -36,17 +39,20 @@ export default function MeetingTable({ meetings = [] }) {
         }
     };
 
-    const [page, setPage] = useState(1);
-    const perPage = 5;
-
     const totalPages = Math.ceil(meetings.length / perPage);
     const paginatedMeetings = meetings.slice(
         (page - 1) * perPage,
         page * perPage
     );
 
+    const handleStartMeeting = (meetingId) => {
+        // You can redirect or trigger Stream call logic here
+        console.log("Start meeting:", meetingId);
+        // Example: navigate(`/meeting/${meetingId}`);
+    };
+
     return (
-        <div className="w-full max-w-5xl mx-auto mt-10 border rounded-md">
+        <div className="w-full max-w-5xl mx-auto mt-6 border rounded-md">
             <Table>
                 <TableHeader>
                     <TableRow>
@@ -54,6 +60,7 @@ export default function MeetingTable({ meetings = [] }) {
                         <TableHead>Status</TableHead>
                         <TableHead>Agent</TableHead>
                         <TableHead>Created</TableHead>
+                        {showStartButton && <TableHead>Action</TableHead>}
                     </TableRow>
                 </TableHeader>
 
@@ -61,13 +68,11 @@ export default function MeetingTable({ meetings = [] }) {
                     {paginatedMeetings.map((meeting) => (
                         <TableRow key={meeting._id}>
                             <TableCell className="font-medium">{meeting.name}</TableCell>
-
                             <TableCell>
                                 <Badge className={`capitalize ${getStatusColor(meeting.status)}`}>
                                     {meeting.status}
                                 </Badge>
                             </TableCell>
-
                             <TableCell>
                                 <div className="flex items-center gap-2">
                                     <Avatar className="h-6 w-6">
@@ -82,10 +87,19 @@ export default function MeetingTable({ meetings = [] }) {
                                     <span>{meeting.agent?.name || "N/A"}</span>
                                 </div>
                             </TableCell>
-
                             <TableCell className="text-sm text-muted-foreground">
                                 {new Date(meeting.createdAt).toLocaleString()}
                             </TableCell>
+                            {showStartButton && (
+                                <TableCell>
+                                    <button
+                                        onClick={() => handleStartMeeting(meeting._id)}
+                                        className="px-3 py-1 text-sm rounded bg-green-600 text-white hover:bg-green-700"
+                                    >
+                                        Start
+                                    </button>
+                                </TableCell>
+                            )}
                         </TableRow>
                     ))}
                 </TableBody>
@@ -99,7 +113,6 @@ export default function MeetingTable({ meetings = [] }) {
                             aria-disabled={page === 1}
                         />
                     </PaginationItem>
-
                     {Array.from({ length: totalPages }, (_, i) => (
                         <PaginationItem key={i}>
                             <PaginationLink
@@ -110,7 +123,6 @@ export default function MeetingTable({ meetings = [] }) {
                             </PaginationLink>
                         </PaginationItem>
                     ))}
-
                     <PaginationItem>
                         <PaginationNext
                             onClick={() => page < totalPages && setPage(page + 1)}
@@ -122,3 +134,4 @@ export default function MeetingTable({ meetings = [] }) {
         </div>
     );
 }
+
