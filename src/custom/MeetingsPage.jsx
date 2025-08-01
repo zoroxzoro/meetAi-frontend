@@ -20,7 +20,7 @@ const MeetingsPage = () => {
         if (isLoaded && user?.id) {
             getAgentsByUser(user.id);
             getMeetingsByUser(user.id);
-            const t = setTimeout(() => setLocalLoading(false), 500);
+            const t = setTimeout(() => setLocalLoading(false));
             return () => clearTimeout(t);
         }
     }, [isLoaded, user]);

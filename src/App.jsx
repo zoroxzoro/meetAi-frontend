@@ -1,10 +1,12 @@
 import { Routes, Route, useLocation } from "react-router-dom";
-import RegisterPage from "./custom/Register";
-import LoginPage from "./custom/Sing";
-import HomePage from "./Pages/Home";
-import Layout from "./components/ui/Layout";
-import MeetingsPage from "./custom/MeetingsPage";
-import AgentsPage from "./Pages/Agents";
+import { lazy } from "react";
+import MeetingRoom from "./custom/MeetingRoom";
+const RegisterPage = lazy(() => import("./custom/Register"));
+const LoginPage = lazy(() => import("./custom/Sing"));
+const HomePage = lazy(() => import("./Pages/Home"));
+const Layout = lazy(() => import("./components/ui/Layout"));
+const MeetingsPage = lazy(() => import("./custom/MeetingsPage"));
+const AgentsPage = lazy(() => import("./Pages/Agents"));
 
 function App() {
   const location = useLocation();
@@ -17,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<RegisterPage />} />
+
         </Routes>
       ) : (
         <Routes>
@@ -24,7 +27,9 @@ function App() {
             <Route index element={<MeetingsPage />} />
             <Route path="meetings" element={<MeetingsPage />} />
             <Route path="agents" element={<AgentsPage />} />
+
           </Route>
+          <Route path="meeting/:meetingId" element={<MeetingRoom />} />
         </Routes>
       )}
     </>

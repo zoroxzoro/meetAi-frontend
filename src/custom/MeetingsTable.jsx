@@ -17,10 +17,11 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
-
+import { useNavigate } from 'react-router-dom';
 export default function MeetingTable({ meetings = [], showStartButton = false }) {
     const [page, setPage] = useState(1);
     const perPage = 5;
+    const navigate = useNavigate();
 
     const getStatusColor = (status) => {
         switch (status) {
@@ -48,7 +49,8 @@ export default function MeetingTable({ meetings = [], showStartButton = false })
     const handleStartMeeting = (meetingId) => {
         // You can redirect or trigger Stream call logic here
         console.log("Start meeting:", meetingId);
-        // Example: navigate(`/meeting/${meetingId}`);
+        navigate(`meeting/${meetingId}`);
+
     };
 
     return (
